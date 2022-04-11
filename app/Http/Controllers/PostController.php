@@ -35,4 +35,8 @@ class PostController extends Controller
     {
        return "asdasasdasd";
     }
+    public function show($id)
+    {
+       return view('posts.show', data: []);
+    }
 }
