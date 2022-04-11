@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\TestController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,5 +18,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/test', [TestController::class, 'test']);
-Route::get('/create-form', [TestController::class, 'createForm']);
+Route::get('/post', [PostController::class, 'index']);
+Route::get('/posts/create', [PostController::class, 'create']);
