@@ -10,7 +10,7 @@
     <title>Blog</title>
 </head>
 
-<body>
+<body style="padding: 50px">
     <nav class="navbar navbar-expend-lg navbar-light bg-light">
         <a href="#" class="navbar-brand">ITI Blog Post</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
@@ -22,37 +22,26 @@
             </div>
         </div>
     </nav>
-
-    <div class="container">
-        <div class="text-center">
-            <button type="button" class="mt-4 btn btn-success"> Create Post</button>
-        </div>
+    <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Title</label>
+        <input type="email" class="form-control" id="exampleFormControlInput1">
     </div>
-    <table class="table mt-4">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Title</th>
-                <th scope="col">Posted By</th>
-                <th scope="col">Created At</th>
-                <th scope="col">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>
-                    <a href="#" class="btn btn-info">View</a>
-                    <a href="#" class="btn btn-primary">Edit</a>
-                    <a href="#" class="btn btn-danger">Delete</a>
-                </td>
-            </tr>
+    <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">Description</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+    </div>
+    <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">Post Creator</label>
+        <select class="form-control" name="" id="">
+            <option>Ahmed</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <button class="btn btn-success">Create Post</button>
+    </div>
 
-        </tbody>
-    </table>
+
+
 </body>
 
 </html>
