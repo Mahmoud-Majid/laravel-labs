@@ -10,7 +10,7 @@
     <title>Blog</title>
 </head>
 
-<body style="padding: 50px">
+<body>
     <nav class="navbar navbar-expend-lg navbar-light bg-light">
         <a href="#" class="navbar-brand">ITI Blog Post</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
@@ -22,22 +22,28 @@
             </div>
         </div>
     </nav>
-    <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Title</label>
-        <input type="email" class="form-control" id="exampleFormControlInput1">
-    </div>
-    <div class="mb-3">
-        <label for="exampleFormControlTextarea1" class="form-label">Description</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-    </div>
-    <div class="mb-3">
-        <label for="exampleFormControlTextarea1" class="form-label">Post Creator</label>
-        <select class="form-control" name="" id="">
-            <option>Ahmed</option>
-        </select>
-    </div>
-    <div class="mb-3">
-        <button class="btn btn-success">Create Post</button>
+
+    <div class="container">
+        <form method="POST" action="/posts">
+            @csrf
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Title</label>
+                <input type="email" class="form-control" id="exampleFormControlInput1">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">Description</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">Post Creator</label>
+                <select class="form-control" name="" id="">
+                    <option>Ahmed</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <button type="submit" class="btn btn-success">Create Post</button>
+            </div>
+        </form>
     </div>
 
 
