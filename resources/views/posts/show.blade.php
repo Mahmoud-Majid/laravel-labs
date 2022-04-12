@@ -1,22 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Show</title>
-</head>
+@section('title') Show @endsection
 
-<body>
-    <div class="card">
-        <h2 class="card-header">Post info</h2>
-        <div class="card-body">
-            <h5 class="card-title">Title</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+@section('content')
+<div class="card my-4">
+    <div class="card-header fw-bold fs-1">
+        Post info
+    </div>
+    <div class="card-body ">
+        <h5 class="card-title fs-4">
+            <span class="fw-bold">Title:</span>
+            <p class="d-inline-block card-text text-muted">
+                {{$post->user ? $post->user->name : 'Not Found'}}
+            </p>
+        </h5>
+        <div class="fs-4">
+            <span class="fw-bold ">Description:</span>
+            <p class="card-text d-inline-block text-muted ">
+                {{$post->description ? $post->description : 'Not Found'}}
+            </p>
         </div>
     </div>
-</body>
+</div>
+<!-- post creator info -->
+<div class="card my-4">
+    <div class="card-header fw-bold fs-1">
+        Post Creator info
+    </div>
+    <div class="card-body ">
+        <h5 class="card-title fs-4">
+            <span class="fw-bold">Name:</span>
+            <p class="d-inline-block card-text text-muted">
+                {{$post->user ? $post->user->name : 'Not Found'}}
+            </p>
+        </h5>
+        <h5 class="card-title fs-4">
+            <span class="fw-bold">Email:</span>
+            <p class="d-inline-block card-text text-muted">
+                {{$post->user ? $post->user->email : 'Not Found'}}
+            </p>
+        </h5>
+        <h5 class="card-title fs-4">
+            <span class="fw-bold">Created At:</span>
+            <p class="d-inline-block card-text text-muted">
+                {{$post->created_at ? $post->created_at : 'Not Found'}}
+            </p>
+        </h5>
 
-</html>
+    </div>
+</div>
+
+@endsection

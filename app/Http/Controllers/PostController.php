@@ -2,41 +2,70 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+   
     public function index()
     {
-       $allPosts = [
-          [
-             'id' => 1,
-             'title' => 'Post 1',
-             'posted_by' => 'ahmed',
-             'created_at' => '2019-01-01',
-          ],    
-          [
-             'id' => 2,
-             'title' => 'Post 2',
-             'posted_by' => 'ali',
-             'created_at' => '2020-05-07',
-          ],          
-       ];
-      //  dd($allPosts);
-       return view('posts.index', data: [
-          'allPosts' => $allPosts,
-       ]);
+      $posts = Post::all();
+
+      return view('posts.index',['allPosts'=>$posts]);
+
     }
     public function create()
     {
-       return view('posts.create', data: []);
+       $user = User::all();
+       return view('posts.create', ['users'=>$user]);
     }
+
     public function store()
     {
-       return "asdasasdasd";
+      $data = request()->all();
+      Post::create([
+         'title' => $data['title'],
+         'description' => $data['description'],
+         'user_id' => $data['post_creator'],
+      ]);
+      
+      //  return redirect()->route('posts.index');
+      return to_route('posts.index');
     }
-    public function show($id)
+
+    public function show($post)
     {
-       return view('posts.show', data: []);
+       $post = Post::find($post);
+    
+       return view('posts.show', ['post'=>$post]);     
     }
+
+    public function edit($id)
+    {
+         $post = Post::findOrFail($id);
+         return view('posts.edit', ['post'=>$post]);
+
+   }
+
+  public function update($id){
+      $data = request()->all();
+      $post = Post::findOrFail($id);
+      $post->update([
+         'title' => $data['title'],
+         'description' => $data['description'],
+      ]);
+    
+
+    return to_route('posts.index');
+  }
+
+
+  public function destroy ($id){
+      $post = Post::findOrFail($id);
+      $post->delete();
+      return to_route('posts.index');
+     
+     }
 }
