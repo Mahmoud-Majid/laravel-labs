@@ -11,9 +11,10 @@ class PostController extends Controller
    
     public function index()
     {
-      $posts = Post::all();
+      $posts = Post::paginate();
+      $comments = \App\Models\Comment::with('commentable')->get();
 
-      return view('posts.index',['allPosts'=>$posts]);
+      return view('posts.index',['allPosts'=>$posts, 'comments'=>$comments ]);
 
     }
     public function create()
@@ -38,18 +39,19 @@ class PostController extends Controller
     public function show($post)
     {
        $post = Post::find($post);
-    
+       dd($post->commentable);
        return view('posts.show', ['post'=>$post]);     
     }
 
     public function edit($id)
     {
          $post = Post::findOrFail($id);
-         return view('posts.edit', ['post'=>$post]);
+         $users = User::all();
+         return view('posts.edit', ['post'=>$post, 'users'=>$users]);
 
    }
 
-  public function update($id){
+   public function update($id){
       $data = request()->all();
       $post = Post::findOrFail($id);
       $post->update([

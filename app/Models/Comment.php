@@ -8,4 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Comment extends Model
 {
     use HasFactory;
+
+    public function commentable()
+    {
+        return $this->morphTo();
+    }
+    protected $fillable = [
+        'comment',
+        'post_id',
+    ];
+   
+
+
 }

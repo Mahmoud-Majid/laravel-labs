@@ -20,6 +20,17 @@
                 {{$post->description ? $post->description : 'Not Found'}}
             </p>
         </div>
+        <div class="fs-4">
+            <span class="fw-bold ">Comments:</span>
+            @if(isset($post->comments))
+            @foreach ($post->comments as $comment)
+
+            <p class="card-text d-inline-block text-muted ">
+                {{$comment}}
+            </p>
+            @endforeach
+            @endif
+        </div>
     </div>
 </div>
 <!-- post creator info -->
