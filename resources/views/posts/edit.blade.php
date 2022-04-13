@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title')Create @endsection
+@section('title') Edit {{$post['title']}} @endsection
 
 @section('content')
 <form class="col-6 mx-auto my-5" method="POST" action="{{route('posts.update',['post' => $post["id"] ])}}">

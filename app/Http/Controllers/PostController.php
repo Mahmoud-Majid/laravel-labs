@@ -39,7 +39,6 @@ class PostController extends Controller
     public function show($post)
     {
        $post = Post::find($post);
-       dd($post->commentable);
        return view('posts.show', ['post'=>$post]);     
     }
 
@@ -57,6 +56,7 @@ class PostController extends Controller
       $post->update([
          'title' => $data['title'],
          'description' => $data['description'],
+         'user_id' => $data['post_creator'],
       ]);
     
 
@@ -67,6 +67,7 @@ class PostController extends Controller
   public function destroy ($id){
       $post = Post::findOrFail($id);
       $post->delete();
+      $post->delete()->comments()->delete();
       return to_route('posts.index');
      
      }

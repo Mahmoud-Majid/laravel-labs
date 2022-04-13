@@ -14,11 +14,8 @@ class Post extends Model
         'title',
         'description',
         'user_id',
-        'comments'
     ];
 
-
-    public $timestamps = true;
 
     public function user()
     {
@@ -27,7 +24,7 @@ class Post extends Model
 
     public function comments()
     {
-        return $this->morphMany(Comment::class, 'commentable')->whereNull('parent_id');;
+        return $this->morphMany(Comment::class, 'commentable');
     }
 
 }

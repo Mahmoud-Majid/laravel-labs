@@ -17,7 +17,6 @@ class Comment extends Model
         'commentable_type'
     ];
    
-    public $timestamps = true;
 
     public function commentable()
     {
