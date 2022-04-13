@@ -25,17 +25,18 @@ class StorePostRequest extends FormRequest
     {
         return 
             [
-                'title' => ['required', 'min:3'],
-                'description' => ['required', 'min:5'],
+                'title' => ['required', 'unique' ,'min:3'],
+                'description' => ['required', 'min:10'],
             ];
     }
+    
     public function messages()
-{
+    {
     return [
         'title.required' => 'Title cannot be empty',
         'title.min' => 'Title must be at least 3 characters',
         'description.required' => 'Description cannot be empty',
         'description.min' => 'Description must be at least 5 characters',
     ];
-}
+    }   
 }

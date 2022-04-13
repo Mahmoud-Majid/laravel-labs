@@ -26,16 +26,16 @@ class PostController extends Controller
 
     public function store(StorePostRequest $request)
     {
-       request()->validate([
-           'title' => ['required', 'min:3'],
-           'description' => ['required', 'min:5'],
-       ],
-      [
-            'title.required' => 'Title cannot be empty',
-            'title.min' => 'Title must be at least 3 characters',
-            'description.required' => 'Description cannot be empty',
-            'description.min' => 'Description must be at least 5 characters',
-         ]);
+      //  request()->validate([
+      //      'title' => ['required', 'min:3'],
+      //      'description' => ['required', 'min:5'],
+      //  ],
+      // [
+      //       'title.required' => 'Title cannot be empty',
+      //       'title.min' => 'Title must be at least 3 characters',
+      //       'description.required' => 'Description cannot be empty',
+      //       'description.min' => 'Description must be at least 5 characters',
+      //    ]);
    
       //    $post = Post::create([
       //       'title' => request('title'),
@@ -72,8 +72,20 @@ class PostController extends Controller
    }
 
    public function update($id){
+      request()->validate([
+         'title' => 'required|min:3',
+         'description' => 'required|min:10',
+         'post_creator' => 'required|exists:users,id',
+     ]);
+
+     $post = Post::findOrFail($id);
+     if ($post->title != request('title')) {
+         request()->validate([
+             'title' => 'required|unique:posts|min:3',
+         ]);
+     }
+
       $data = request()->all();
-      $post = Post::findOrFail($id);
       $post->update([
          'title' => $data['title'],
          'description' => $data['description'],

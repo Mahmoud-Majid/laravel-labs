@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,18 +20,34 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Route::group(function (){
+//     Route::get('/post', [PostController::class, 'index'])->name('posts.index')->middleware('second-gate');
+//     Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
+//     Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+//     Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
+//     Route::get('/posts/{post}/edit',[PostController::class,'edit'])->name('posts.edit');
+//     Route::put('/posts/{post}',[PostController::class,'update'])->name('posts.update');
+//     Route::delete('/posts/{post}',[PostController::class,'destroy'])->name('posts.destroy');
 
-Route::get('/post', [PostController::class, 'index'])->name('posts.index');
-Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
-Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
-Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
-Route::get('/posts/{post}/edit',[PostController::class,'edit'])->name('posts.edit');
-Route::put('/posts/{post}',[PostController::class,'update'])->name('posts.update');
-Route::delete('/posts/{post}',[PostController::class,'destroy'])->name('posts.destroy');
+//     // Comments Routes
+//     Route::post('/comments/{postId}', [CommentController::class, 'create'])->name('comments.create');
+//     Route::delete('/comments/{postId}/{commentId}', [CommentController::class, 'delete'])->name('comments.delete');
+//     Route::get('/comments/{postId}/{commentId}', [CommentController::class, 'view'])->name('comments.view');
+//     Route::patch('/comments/{postId}/{commentId}', [CommentController::class, 'edit'])->name('comments.update');
 
+// })->middleware('auth');
+Route::get('/post', [PostController::class, 'index'])->name('posts.index')->middleware('second-gate');
+    Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create')->middleware('auth');
+    Route::post('/posts', [PostController::class, 'store'])->name('posts.store')->middleware('auth');
+    Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show')->middleware('auth');
+    Route::get('/posts/{post}/edit',[PostController::class,'edit'])->name('posts.edit')->middleware('auth');
+    Route::put('/posts/{post}',[PostController::class,'update'])->name('posts.update')->middleware('auth');
+    Route::delete('/posts/{post}',[PostController::class,'destroy'])->name('posts.destroy')->middleware('auth');
 
-// Comments Routes
-Route::post('/comments/{postId}', [CommentController::class, 'create'])->name('comments.create');
-Route::delete('/comments/{postId}/{commentId}', [CommentController::class, 'delete'])->name('comments.delete');
-Route::get('/comments/{postId}/{commentId}', [CommentController::class, 'view'])->name('comments.view');
-Route::patch('/comments/{postId}/{commentId}', [CommentController::class, 'edit'])->name('comments.update');
+    // Comments Routes
+    Route::post('/comments/{postId}', [CommentController::class, 'create'])->name('comments.create')->middleware('auth');
+    Route::delete('/comments/{postId}/{commentId}', [CommentController::class, 'delete'])->name('comments.delete')->middleware('auth');
+    Route::get('/comments/{postId}/{commentId}', [CommentController::class, 'view'])->name('comments.view')->middleware('auth');
+    Route::patch('/comments/{postId}/{commentId}', [CommentController::class, 'edit'])->name('comments.update')->middleware('auth');
+Auth::routes();
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
