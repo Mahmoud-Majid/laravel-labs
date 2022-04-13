@@ -19,12 +19,32 @@ class PostController extends Controller
     }
     public function create()
     {
-       $user = User::all();
-       return view('posts.create', ['users'=>$user]);
+       $users = User::all();
+       return view('posts.create', ['users'=>$users]);
     }
 
     public function store()
     {
+       request()->validate([
+           'title' => ['required', 'min:3'],
+           'description' => ['required', 'min:5'],
+       ],
+      [
+            'title.required' => 'Title cannot be empty',
+            'title.min' => 'Title must be at least 3 characters',
+            'description.required' => 'Description cannot be empty',
+            'description.min' => 'Description must be at least 5 characters',
+         ]);
+   
+      //    $post = Post::create([
+      //       'title' => request('title'),
+      //       'description' => request('description'),
+      //       'user_id' => request('user_id'),
+      //    ]);
+   
+      //    return redirect('posts');
+      // ]);
+
       $data = request()->all();
       Post::create([
          'title' => $data['title'],
