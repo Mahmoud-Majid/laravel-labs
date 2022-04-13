@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\User;
+use App\Http\Requests\StorePostRequest;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -23,7 +24,7 @@ class PostController extends Controller
        return view('posts.create', ['users'=>$users]);
     }
 
-    public function store()
+    public function store(StorePostRequest $request)
     {
        request()->validate([
            'title' => ['required', 'min:3'],
