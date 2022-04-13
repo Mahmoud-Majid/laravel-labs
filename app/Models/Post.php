@@ -9,20 +9,25 @@ class Post extends Model
 {
     use HasFactory;
 
-    //
-    public function comments()
-    {
-        return $this->hasMany(Comment::class, 'post_id');
-    }
 
     protected $fillable = [
         'title',
         'description',
         'user_id',
+        'comments'
     ];
+
+
+    public $timestamps = true;
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
+
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable')->whereNull('parent_id');;
+    }
+
 }
