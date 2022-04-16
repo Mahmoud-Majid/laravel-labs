@@ -25,9 +25,12 @@ class UpdatePostRequest extends FormRequest
     {
         return 
         [
-            'title' => 'required|min:3',
-            'description' => 'required|min:10',
-            'post_creator' => 'required|exists:users,id',
+            'title' => 'required|min:3|max:255,unique:posts,title',
+            'description' => 'required|min:3|max:255',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            // 'title' => 'required|min:3',
+            // 'description' => 'required|min:10',
+            // 'post_creator' => 'required|exists:users,id',
         ];
         
     }

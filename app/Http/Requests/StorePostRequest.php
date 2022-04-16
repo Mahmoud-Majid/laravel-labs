@@ -24,10 +24,17 @@ class StorePostRequest extends FormRequest
     public function rules()
     {
         return 
-            [
-                'title' => ['required', 'unique' ,'min:3'],
-                'description' => ['required', 'min:10'],
-            ];
+        [
+            'title' => ['required', 'min:3', 'max:255', 'unique:posts'],
+            'description' => ['required', 'min:10', 'max:255'],
+            'image' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'slug' => ['unique:posts'],
+            // 'title' => 'required|unique:posts,title,'.$this->id.'|min:3',
+            // 'description' => 'required|min:10',
+            // // 'post_creator' => 'required|exists:users,id',
+            // 'image' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:8192'],
+            // 'slug' => ['unique:posts'],
+        ];
     }
     
     public function messages()

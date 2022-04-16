@@ -11,6 +11,7 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">Title</th>
+            <th scope="col">Slug</th>
             <th scope="col">Posted By</th>
             <th scope="col">Created At</th>
             <th scope="col" style="text-align: center">Actions</th>
@@ -21,6 +22,7 @@
         <tr>
             <td>{{$post->id}}</th>
             <td>{{$post->title}}</td>
+            <td>{{$post->slug}}</td>
             <td>{{$post->user ? $post->user->name : 'Not Found'}}</td>
             <td>{{$post->created_at->format('Y-m-d')}}</td>
             <td>
@@ -60,4 +62,9 @@
 <div class="text-center">
     {{ $allPosts->links() }}
 </div>
+<style>
+svg {
+    width: 35px;
+}
+</style>
 @endsection

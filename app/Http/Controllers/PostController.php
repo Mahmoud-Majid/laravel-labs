@@ -5,11 +5,29 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\User;
 use App\Http\Requests\StorePostRequest;
+use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Http\Request;
+use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
-   
+   use Sluggable;
+
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
+    }
     public function index()
     {
       $posts = Post::paginate();
@@ -25,32 +43,18 @@ class PostController extends Controller
     }
 
     public function store(StorePostRequest $request)
-    {
-      //  request()->validate([
-      //      'title' => ['required', 'min:3'],
-      //      'description' => ['required', 'min:5'],
-      //  ],
-      // [
-      //       'title.required' => 'Title cannot be empty',
-      //       'title.min' => 'Title must be at least 3 characters',
-      //       'description.required' => 'Description cannot be empty',
-      //       'description.min' => 'Description must be at least 5 characters',
-      //    ]);
-   
-      //    $post = Post::create([
-      //       'title' => request('title'),
-      //       'description' => request('description'),
-      //       'user_id' => request('user_id'),
-      //    ]);
-   
-      //    return redirect('posts');
-      // ]);
+    { 
+     $data = request()->all();
+     $slug = SlugService::createSlug(Post::class, 'slug', $data['title']);
+     $path = Storage::putFile('public', request()->file('image'));
+     $url = Storage::url($path);
 
-      $data = request()->all();
-      Post::create([
-         'title' => $data['title'],
-         'description' => $data['description'],
-         'user_id' => $data['post_creator'],
+     Post::create([
+        'title' => $data['title'],
+        'description' => $data['description'],
+        'user_id' => $data['post_creator'],
+        'slug' => $slug,
+        'image_path' => $url,
       ]);
       
       //  return redirect()->route('posts.index');
@@ -71,25 +75,21 @@ class PostController extends Controller
 
    }
 
-   public function update($id){
-      request()->validate([
-         'title' => 'required|min:3',
-         'description' => 'required|min:10',
-         'post_creator' => 'required|exists:users,id',
-     ]);
+   public function update($id, StorePostRequest $request){
 
-     $post = Post::findOrFail($id);
-     if ($post->title != request('title')) {
-         request()->validate([
-             'title' => 'required|unique:posts|min:3',
-         ]);
-     }
-
+      $post = Post::findOrFail($id);
       $data = request()->all();
+      $path = Storage::putFile('public', request()->file('image'));
+      $url = Storage::url($path);
+      $slug = SlugService::createSlug(Post::class, 'slug', $data['title']);
+
       $post->update([
          'title' => $data['title'],
          'description' => $data['description'],
          'user_id' => $data['post_creator'],
+         'image_path' => $data['image'],
+         'slug' => $slug,
+         'image_path' => $url,
       ]);
     
 
@@ -99,8 +99,13 @@ class PostController extends Controller
 
   public function destroy ($id){
       $post = Post::findOrFail($id);
+      $location =  $post->image_path;
+      $imageName = basename($location);
+
+      // $imageURL = "D:\DOCS MOHMA\iti\OPEN SOURCE\Larvel\Day 1\Lab1\\example-app\storage\app\public" . '\\' . $imageName;
+      // unlink($imageURL);
+      $post->comments()->delete();
       $post->delete();
-      $post->delete()->comments()->delete();
       return to_route('posts.index');
      
      }

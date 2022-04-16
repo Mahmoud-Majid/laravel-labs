@@ -13,7 +13,7 @@ class CommentController extends Controller
         $post = Post::findOrFail($postId);
         $req = request();
         $post->Comments()->create([
-            'user_id' => 1,
+            'user_id' => $req->user_id,
             'body' => $req->comment,
             'commentable_id' => $postId,
             'commentable_type' => Post::class,

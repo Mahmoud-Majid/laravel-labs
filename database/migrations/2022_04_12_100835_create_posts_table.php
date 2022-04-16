@@ -14,10 +14,19 @@ return new class extends Migration
     public function up()
     {
         Schema::create('posts', function (Blueprint $table) {
+            // $table->id();
+            // $table->string('title'); 
+            // $table->unsignedBigInteger('user_id')->nullable();
+            // $table->text('description');
+            // $table->string('slug')->nullable();
+            // $table->string('image_path')->nullable();
+            // $table->timestamps();
             $table->id();
             $table->string('title');
-            $table->unsignedBigInteger('user_id')->nullable();
             $table->text('description');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->string('slug')->nullable();
+            $table->string('image_path')->nullable();
             $table->timestamps();
         });
     }

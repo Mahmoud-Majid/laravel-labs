@@ -3,7 +3,8 @@
 @section('title') Edit {{$post['title']}} @endsection
 
 @section('content')
-<form class="col-6 mx-auto my-5" method="POST" action="{{route('posts.update',['post' => $post["id"] ])}}">
+<form class="col-6 mx-auto my-5" method="POST" action="{{route('posts.update',['post' => $post["id"] ])}} enctype="
+    multipart/form-data"">
     @csrf
     @method('PUT')
     <div class="mb-3">
@@ -24,6 +25,11 @@
             <option value="{{$user->id}}" @if($user->id == $post->user_id) selected @endif >{{$user->name}}</option>
             @endforeach
         </select>
+    </div>
+    <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Avatar</label>
+        <input id="avatar" type="file" class="form-control" name="avatar">
+
     </div>
 
     <button type="submit" class="btn btn-primary">Update Post</button>
