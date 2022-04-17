@@ -30,7 +30,6 @@
                 <a href=" {{route('posts.edit',['post'=>$post['id']])}}" class="btn btn-primary">Edit</a>
                 <button type="button" data-bs-target="#exampleModal{{ $post->id }}" class="btn btn-danger"
                     data-bs-toggle="modal">Delete</button>
-
             </td>
             <div class="modal fade" id="exampleModal{{ $post->id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">

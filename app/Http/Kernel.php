@@ -68,7 +68,5 @@ class Kernel extends HttpKernel
         'second-gate' => \App\Http\Middleware\TestingSecondGate::class,
     ];
 
-    protected function schedule(Schedule $schedule) {
-        $schedule->job(new PruneOldPostsJob)->daily();
-    }
+    
 }
