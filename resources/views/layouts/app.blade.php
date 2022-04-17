@@ -38,7 +38,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-                        <a class="nav-link active" href="/post">All Posts</a>
+                        <a class="nav-link active" href="/posts">All Posts</a>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

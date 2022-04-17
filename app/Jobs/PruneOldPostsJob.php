@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\Post;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -21,9 +22,9 @@ class PruneOldPostsJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(Post $post)
+    public function __construct()
     {
-        $this->post = $post;
+        // $this->post = $post;
     }
 
     /**
@@ -33,6 +34,8 @@ class PruneOldPostsJob implements ShouldQueue
      */
     public function handle()
     {
-        //
+        $now = Carbon::now();
+        $twoYearsAgo = $now->subYears(2);
+        Post::where('created_at', '<', (string) $twoYearsAgo)->delete();
     }
 }

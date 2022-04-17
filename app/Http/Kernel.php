@@ -2,6 +2,8 @@
 
 namespace App\Http;
 
+use App\Jobs\PruneOldPostsJob;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -65,4 +67,8 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'second-gate' => \App\Http\Middleware\TestingSecondGate::class,
     ];
+
+    protected function schedule(Schedule $schedule) {
+        $schedule->job(new PruneOldPostsJob)->daily();
+    }
 }

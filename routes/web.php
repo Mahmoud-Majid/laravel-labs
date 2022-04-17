@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
+use Illuminate\Routing\Route as RoutingRoute;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -36,7 +37,7 @@ Route::get('/', function () {
 //     Route::patch('/comments/{postId}/{commentId}', [CommentController::class, 'edit'])->name('comments.update');
 
 // })->middleware('auth');
-Route::get('/post', [PostController::class, 'index'])->name('posts.index')->middleware('second-gate');
+    Route::get('/posts', [PostController::class, 'index'])->name('posts.index')->middleware('second-gate');
     Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create')->middleware('auth');
     Route::post('/posts', [PostController::class, 'store'])->name('posts.store')->middleware('auth');
     Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show')->middleware('auth');

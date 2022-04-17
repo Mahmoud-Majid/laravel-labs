@@ -48,6 +48,14 @@
         </h5>
     </div>
 </div>
+<div class="card my-4">
+    <div class="card-header fw-bold fs-1">
+        Image
+    </div>
+    <div class="card-body ">
+        <img src="{{$post['image_path']}}" alt="{{$post['title']}}" class="img-fluid">
+    </div>
+</div>
 <!-- comments -->
 <div class='mt-4'>
     @foreach ($post->comments as $comment)
