@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\Auth\SocialGithubController;
+use App\Http\Controllers\Auth\GoogleSocialiteController;
+use App\Models\User;
 use Illuminate\Routing\Route as RoutingRoute;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -51,14 +54,43 @@ Route::get('/', function () {
     Route::delete('/comments/{postId}/{commentId}', [CommentController::class, 'delete'])->name('comments.delete')->middleware('auth');
     Route::get('/comments/{postId}/{commentId}', [CommentController::class, 'view'])->name('comments.view')->middleware('auth');
     Route::patch('/comments/{postId}/{commentId}', [CommentController::class, 'edit'])->name('comments.update')->middleware('auth');
-Auth::routes();
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
+    Auth::routes();
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
 
-Route::get('/auth/redirect', function () {
-    return Socialite::driver('github')->redirect();
-});
+    // Route::get('/auth/redirect', function () {
+    //     return Socialite::driver('github')->redirect();
 
-Route::get('/auth/callback', function () {
-    $user = Socialite::driver('github')->user();
-    // $user->token
-});
+    // });
+
+    // Route::get('/auth/callback', function () {
+    //     $githubUser = Socialite::driver('github')->user();
+        
+    //     // make request to github api to get user info
+    //     $user = User::where('github_id', $githubUser->id);
+
+    //     if($user){
+    //         Auth::login($user);
+    //         return redirect('/posts');
+    //     }else{
+
+    //         $user = User::create([
+    //             'name' => $githubUser->name,
+    //             'email' => $githubUser->email,
+    //             'social_id' => $githubUser->id,
+    //             'social_type' => 'github',
+    //             'password' => encrypt('12345678'),
+    //         ]);
+
+    //         Auth::login($user);
+    //         return redirect('/posts');
+    //     }
+
+        
+
+    // });
+
+    Route::get('auth/github', [SocialGithubController::class, 'redirectToGithub']);
+    Route::get('callback/github', [SocialGithubController::class, 'handleCallback']);
+
+    Route::get('auth/google', [GoogleSocialiteController::class, 'redirectToGoogle']);
+    Route::get('callback/google', [GoogleSocialiteController::class, 'handleCallback']);
